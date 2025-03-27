@@ -70,7 +70,7 @@ void menu()
 
 void inicializar()
 {
-	// se a lista j� possuir elementos
+	// se a lista já possuir elementos
 // libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
@@ -116,38 +116,110 @@ void inserirElemento()
 {
 	// aloca memoria dinamicamente para o novo elemento
 	NO* novo = (NO*)malloc(sizeof(NO));
-	if (novo == NULL)
-	{
+if (novo == NULL)
+{
+	return;
+}
+
+cout << "Digite o elemento: ";
+cin >> novo->valor;
+novo->prox = NULL;
+
+if (primeiro == NULL)
+{
+	primeiro = novo;
+}
+else
+{
+	// procura o final da lista
+	NO* aux = primeiro;
+	NO* anterior = NULL;
+
+
+	while (aux != NULL && aux->valor < novo->valor) {
+
+		anterior = aux;
+		aux = aux->prox;
+	}
+		
+	if (aux != NULL && aux->valor == novo->valor) {
+		cout << "elemento ja existe" << endl;
+		free(novo);
 		return;
 	}
 
-	cout << "Digite o elemento: ";
-	cin >> novo->valor;
-	novo->prox = NULL;
-
-	if (primeiro == NULL)
-	{
+	if (anterior == NULL) {
+		novo->prox = primeiro;
 		primeiro = novo;
 	}
+
 	else
 	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
-		}
-		aux->prox = novo;
+		anterior->prox = novo;
+		novo->prox = aux;
 	}
+}
 }
 
 void excluirElemento()
 {
+	NO* novo = (NO*)malloc(sizeof(NO));
+if (novo == NULL)
+{
+	return;
+}
+int valor;
+cout << "Digite o elemento a ser excluído: ";
+cin >> valor;
 
+NO* aux = primeiro;
+NO* anterior = NULL;
+
+
+while (aux != NULL && aux->valor < valor) {
+		anterior = aux;
+		aux = aux->prox;
+}
+if (aux != NULL && aux->valor == valor) {
+	if(anterior == NULL){
+		primeiro = aux->prox;
+	}
+	else{
+		anterior->prox = aux->prox;
+	}
+	free(aux);
+		cout << "Elemento excluído" << endl;
+}
+	else {
+	cout << "Elemento não encontrado" << endl;
+
+	}
 }
 
 void buscarElemento()
 {
+	NO* novo = (NO*)malloc(sizeof(NO));
+if (novo == NULL)
+{
+	return;
+}
+int valor;
+cout << "Digite o elemento a ser encontrado: ";
+cin >> valor;
 
+NO* aux = primeiro;
+
+while (aux != NULL && aux->valor < valor) {
+	aux = aux->prox;
+}
+
+if (aux != NULL && aux->valor == valor) {
+	cout << "Elemento encontrado : " << aux->valor << endl;
+}
+else
+{
+	cout << "Elemento não encontrado";
+}
 }
 
 
